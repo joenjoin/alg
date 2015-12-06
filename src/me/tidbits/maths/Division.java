@@ -1,4 +1,4 @@
-package tidbits;
+package me.tidbits.maths;
 
 /**
  * Implement integer division without using operator "/"
