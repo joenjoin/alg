@@ -43,7 +43,27 @@ public class Integers {
         out.println(0x0F >>> 33); // 0F>>33 === 0F>>1 --> 07
     }
 
+    /**
+     * 15.17.3. Remainder Operator %
+     *
+     * It follows from this rule that the result of the remainder operation can
+     * be negative only if the dividend is negative, and can be positive only if
+     * the dividend is positive. Moreover, the magnitude of the result is always
+     * less than the magnitude of the divisor.
+     */
+    public static void negModulus() {
+        out.println(5 % 3); // produce 2
+
+        out.println(5 % (-3)); // same with 5 % 3, produce 2
+
+        out.println((-5) % 3); // produce -2
+
+        out.println((-5) % (-3)); // same with -5 % 3, produce -2
+    }
+
     public static void main(String[] args) {
         rightShift();
+        leftShift();
+        negModulus();
     }
 }
