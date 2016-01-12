@@ -5,14 +5,11 @@ public class SinglyLinkedList {
 	/**
 	 * Find middle of a singly linked list, for example:
 	 * 
-	 * Input: 3->2->5->6->1
+	 * @Input: 3->2->5->6->1
+	 * @Output: 5->6->1
 	 * 
-	 * Output: 5->6->1
-	 * 
-	 * 
-	 * Input: 7->5->8->3
-	 * 
-	 * Output: 8->3
+	 * @Input: 7->5->8->3
+	 * @Output: 8->3
 	 */
 	public static SingleListNode middle(SingleListNode head) {
 		SingleListNode slow, fast;
@@ -30,9 +27,8 @@ public class SinglyLinkedList {
 	/**
 	 * Reverse a singly linked list, for example:
 	 * 
-	 * 
-	 * @param head
-	 * @return
+	 * @Input: 1->2->3
+	 * @Output: 3->2->1
 	 */
 	public static SingleListNode reverse(SingleListNode head) {
 
@@ -81,9 +77,13 @@ public class SinglyLinkedList {
 
 		SingleListNode node = head;
 		while (node != null) {
-			System.out.println(node.val);
+			System.out.print(node.val);
 			node = node.next;
+			if (node != null) {
+				System.out.print("->");
+			}
 		}
+		System.out.println();
 	}
 
 }
