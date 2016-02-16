@@ -1,11 +1,7 @@
 package me.tidbits.dp;
 
 import java.util.Arrays;
-import java.util.LinkedList;
 
-import org.apache.commons.lang3.ArrayUtils;
-
-import me.tidbits.list.SingleListNode;
 import me.tidbits.utils.ListUtil;
 
 /**
@@ -23,17 +19,25 @@ public class LongestIncreasingSubsequence {
 		// int[] input = { 6, 7, 8, 9, 1, 2, 3, 4, 5 };
 		// int[] input = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 
-		// System.out.println(longestIncreasingSubsequence_n2(input));
-		// System.out.println("-----------");
-		// System.out.println(longestIncreasingSubsequence_nlogn(input));
-
 		int[] input = ListUtil.generateRandomArray(10, false, 100, 10);
+		System.out.println("Input: " + Arrays.toString(input));
+		int res1 = longestIncreasingSubsequence_n2(input);
+		System.out.println("--------------");
+		int res2 = longestIncreasingSubsequence_nlogn(input);
 
-		System.out.println(Arrays.toString(input));
-		System.out.println("-----------");
-		System.out.println(longestIncreasingSubsequence_n2(input));
-		System.out.println("-----------");
-		System.out.println(longestIncreasingSubsequence_nlogn(input));
+		// for (int i = 0; i < 10000; i++) {
+		// int[] input = ListUtil.generateRandomArray(10000, false, 100000, 0);
+		//
+		// int res1 = longestIncreasingSubsequence_n2(input);
+		// int res2 = longestIncreasingSubsequence_nlogn(input);
+		//
+		// if (res1 != res2) {
+		// System.out.println(res1 + " vs " + res2);
+		// throw new RuntimeException("Failed.");
+		// }
+		// }
+
+		System.out.println("All passed.");
 	}
 
 	/**
@@ -112,17 +116,21 @@ public class LongestIncreasingSubsequence {
 	 */
 	public static int longestIncreasingSubsequence_nlogn(int[] input) {
 		int[] table = new int[input.length];
+		int[] position = new int[input.length];
 		int len;
 
 		table[0] = input[0];
 		len = 1;
 
 		for (int i = 1; i < input.length; i++) {
-			if (input[i] > table[len - 1]) {
+			if (input[i] < table[0]) {
+				table[0] = input[i];
+				position[i] = 0;
+			} else if (input[i] > table[len - 1]) {
 				table[len] = input[i];
+				position[i] = len;
 				len++;
 			} else {
-
 				// Find longest active list whose end item smaller than
 				// input i
 				int l = 0;
@@ -133,17 +141,29 @@ public class LongestIncreasingSubsequence {
 
 					if (mid == l)
 						break;
-					if (input[i] < table[mid]) {
-						r = mid - 1;
+					if (table[mid] > input[i]) {
+						r = mid;
 					} else {
 						l = mid;
 					}
 				}
 
-				table[mid] = input[i];
+				table[r] = input[i];
+				position[i] = r;
 			}
 		}
 
+		// System.out.println(Arrays.toString(position));
+
+		int len2 = len - 1;
+		for (int i = position.length - 1; i >= 0; i--) {
+			if (position[i] == len2) {
+				System.out.print(input[i] + " ");
+				len2--;
+			}
+		}
+
+		System.out.println();
 		return len;
 	}
 }

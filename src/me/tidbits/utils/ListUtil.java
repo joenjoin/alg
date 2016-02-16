@@ -13,7 +13,7 @@ public class ListUtil {
 		HashSet<Integer> values = new HashSet<Integer>();
 
 		Random random = new Random();
-		for (int i = 0; i < length; i++) {
+		for (int i = 0; i < length;) {
 			double next = random.nextDouble();
 			int e = (int) (next * (max - min)) + min;
 
@@ -23,6 +23,7 @@ public class ListUtil {
 			values.add(e);
 
 			res[i] = e;
+			i++;
 		}
 
 		return res;
