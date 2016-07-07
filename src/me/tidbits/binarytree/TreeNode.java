@@ -1,13 +1,11 @@
 package me.tidbits.binarytree;
 
-import java.util.Arrays;
+public class TreeNode<T> {
+	T val;
+	TreeNode<T> left;
+	TreeNode<T> right;
 
-public class TreeNode {
-	int val;
-	TreeNode left;
-	TreeNode right;
-
-	public static TreeNode fromString(String s) {
+	public static TreeNode<String> fromString(String s) {
 		if (s == null)
 			return null;
 
@@ -17,13 +15,12 @@ public class TreeNode {
 		}
 
 		String[] nodestr = s.substring(1, s.length() - 1).split(",");
-		System.out.println(Arrays.toString(nodestr));
-		TreeNode[] nodes = new TreeNode[nodestr.length];
+		TreeNode<String>[] nodes = new TreeNode[nodestr.length];
 		for (int i = 0; i <= nodestr.length / 2 - 1; i++) {
-			TreeNode node = nodes[i];
+			TreeNode<String> node = nodes[i];
 
 			if (node == null) {
-				node = constructPureNode(nodestr[i]);
+				node = createSingleNode(nodestr[i]);
 			}
 			if (node != null) {
 
@@ -31,12 +28,12 @@ public class TreeNode {
 				int right = 2 * (i + 1) + 1 - 1;
 
 				if (left < nodestr.length) {
-					node.left = constructPureNode(nodestr[left]);
+					node.left = createSingleNode(nodestr[left]);
 					nodes[left] = node.left;
 				}
 
 				if (right < nodestr.length) {
-					node.right = constructPureNode(nodestr[right]);
+					node.right = createSingleNode(nodestr[right]);
 					nodes[right] = node.right;
 				}
 			}
@@ -47,19 +44,17 @@ public class TreeNode {
 		return nodes[0];
 	}
 
-	private static TreeNode constructPureNode(String snode) {
-
-		System.out.println("Constr " + snode);
+	private static TreeNode<String> createSingleNode(String snode) {
 		if ("null".equals(snode)) {
 			return null;
 		}
 
-		TreeNode node = new TreeNode();
-		node.val = Integer.parseInt(snode);
+		TreeNode<String> node = new TreeNode<String>();
+		node.val = snode;
 		return node;
 	}
 
-	public static int height(TreeNode root) {
+	public static int height(TreeNode<?> root) {
 		if (root == null) {
 			return 0;
 		}
@@ -68,8 +63,12 @@ public class TreeNode {
 	}
 
 	public static void main(String[] args) {
-		TreeNode root = fromString("[1,2,3,null,5,null,7]");
+		String input = "[1,2,3,null,5,null,7]";
+		TreeNode<String> root = fromString(input);
+		System.out.print("Input: ");
+		System.out.println(input);
 
+		System.out.print("Level order pretty:");
 		System.out.println(BinaryTreeTraversal.levelOrderPretty(root));
 	}
 }
